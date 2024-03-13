@@ -21,6 +21,7 @@ public class EnemyManager1 : MonoBehaviour
         yield return new WaitForSeconds(setTimer(timer));
         Instantiate(enemy, transform.position, transform.rotation);
         }
+        Destroy(gameObject);
 
 
     }

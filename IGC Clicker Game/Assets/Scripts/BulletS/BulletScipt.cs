@@ -8,7 +8,7 @@ public class BulletScipt : MonoBehaviour
     private Vector3 mousePos;
     private Camera mainCam;
     private Rigidbody2D rb;
-    public float force;
+    private float force;
     public float deathTime;
     private float damage;
 
@@ -16,6 +16,7 @@ public class BulletScipt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        force = Shooting.instance.attackList[0].speed;
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rb = GetComponent<Rigidbody2D>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -31,6 +32,7 @@ public class BulletScipt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        force = Shooting.instance.attackList[0].speed;
         damage = Shooting.instance.attackList[0].damage;
         if(deathTime <=0){
             Destroy(gameObject);

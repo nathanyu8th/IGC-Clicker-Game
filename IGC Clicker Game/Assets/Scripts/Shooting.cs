@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Shooting : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Shooting : MonoBehaviour
     public List<float> timerList = new List<float>();
     public float timeBetweenFiring;
     private int moveNumber;
+    public TextMeshProUGUI currentText;
 
     public List<AttackData>  attackList = new List<AttackData>();
 
@@ -27,6 +29,12 @@ public class Shooting : MonoBehaviour
         foreach(AttackData AttackData in attackList){
             timerList.Add(AttackData.bulletCooldown);
         }
+        foreach(AttackData AttackData in attackList){
+                if(AttackData.bulletCooldown > 0){
+                    
+                    AttackData.bulletCooldown =0;
+                }
+            }
 
         if(instance == null){
             instance = this;
@@ -39,9 +47,11 @@ public class Shooting : MonoBehaviour
     public void addAttackList(AttackData attack){
         attackList.Add(attack);
         timerList.Add(attack.bulletCooldown);
+        attack.bulletCooldown = 0;
     }
 
     void Update(){
+        currentText.SetText("Current Move: " + attackList[moveNumber].name + "\n" + "Cooldown: " + Mathf.Round(attackList[moveNumber].bulletCooldown * 100f)/100f);
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
 
@@ -79,6 +89,7 @@ public class Shooting : MonoBehaviour
              attackList[moveNumber].bulletCooldown = timerList[moveNumber];
         }
 
+
         if(Input.GetKeyDown(KeyCode.F)){
              if(moveNumber == attackList.Count-1){
                  moveNumber = 0;
@@ -96,8 +107,8 @@ public class Shooting : MonoBehaviour
 
         //[0] should be a shooting move straight
         //[1] should be the bomb
-        //[2] try beam
-        //[3] big AoE, less dmg
+        //[2] big AoE, less dmg
+        //[3] try beam
         //[4] big bomb that goes thru enemies
         //[5] vertical lightning attack
 
@@ -134,6 +145,7 @@ public class AttackData {
     public bool playerPosition;
     //public static AttackData instance;
     public float damage;
+    public float speed;
     
 
 }

@@ -32,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
         
         }
         else{
-            GameManager.instance.AddMoney(moneyGives);
+            //GameManager.instance.AddMoney(moneyGives);
             Destroy(gameObject);
         }
         }
